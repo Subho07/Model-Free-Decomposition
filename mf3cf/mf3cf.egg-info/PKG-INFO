@@ -1,0 +1,37 @@
+Metadata-Version: 1.1
+Name: mf3cf
+Version: 2.1.1
+Summary: Model-free 3-component full polarimetric decomposition
+Home-page: UNKNOWN
+Author: Subhadip Dey
+Author-email: sdey2307@gmail.com
+License: MIT
+Description: This package performs model free 3-component scattering power decomposition for full polarimetric Synthetic Aperture Radar data.
+        
+        Dey, S., Bhattacharya, A., Ratha, D., Mandal, D. and Frery, A.C., 2020. Target Characterization and Scattering Power Decomposition for Full and Compact Polarimetric SAR Data. IEEE Transactions on Geoscience and Remote Sensing.
+        
+        ## usage
+        
+        from mf3cf import mf3cf_powers
+        
+        ps, pd, pv = mf3cf_powers('D:/T3', 7)
+        
+        path = 'D:/T3'
+        
+        window_size = 7
+        
+        
+        Change Log
+        ==========
+        
+        2.1.1 (06/01/2021)
+        ------------------
+        - Latest Release
+        - Fixed OS compatibility issue
+Keywords: polSAR,Decomposition,Full-pol,Model-free,MF3CF
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Education
+Classifier: Operating System :: Microsoft :: Windows :: Windows 10
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3

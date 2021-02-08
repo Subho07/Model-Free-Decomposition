@@ -1,0 +1,7 @@
+Change Log
+==========
+
+2.0.0 (06/01/2021)
+------------------
+- Latest Release
+- Fixed OS compatibility issue

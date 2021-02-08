@@ -1,0 +1,11 @@
+CHANGELOG.txt
+LICENSE.txt
+MANIFEST.in
+README.txt
+mf3cc.py
+setup.py
+mf3cc.egg-info/PKG-INFO
+mf3cc.egg-info/SOURCES.txt
+mf3cc.egg-info/dependency_links.txt
+mf3cc.egg-info/requires.txt
+mf3cc.egg-info/top_level.txt

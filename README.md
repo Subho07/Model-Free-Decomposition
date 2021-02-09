@@ -1,6 +1,6 @@
 # Model Free Decomposition techniques using SAR data
 
-![DOI](https://img.shields.io/badge/DOI-https%3A%2F%2Fdoi.org%2F10.1109%2FTGRS.2020.3010840-brightgreen)
+[![DOI](https://img.shields.io/badge/DOI-https%3A%2F%2Fdoi.org%2F10.1109%2FTGRS.2020.3010840-brightgreen)](https://doi.org/10.1109/TGRS.2020.3010840)
 
 This repository contains python packages for model free decompositions using Synthetic Aperture Radar (SAR) data
 

@@ -36,9 +36,9 @@ Install packages using
 
 > python setup.py install
 
-## Usage
+## Usage MF3CF
 
-For MF3CF
+### MF3CF in Python
 ```python
 >> T3_path = 'D:/T3'
 
@@ -50,7 +50,15 @@ For MF3CF
 ```
 Please check the `T3_path` for the exported power components in `.bin` format.
 
-For MF3CC
+### MF3CF in C
+```bash
+gcc mf3cf.c -o mf3cf.exe -lm
+./mf3cf.exe T3
+```
+
+## Usage MF3CC
+
+### MF3CC in Python:
 ```python
 >> C2_path = 'D:/C2'
 

@@ -36,9 +36,9 @@ Install packages using
 
 > python setup.py install
 
-## Usage
+## Usage MF3CF
 
-For MF3CF
+### MF3CF in Python
 ```python
 >> T3_path = 'D:/T3'
 
@@ -50,7 +50,15 @@ For MF3CF
 ```
 Please check the `T3_path` for the exported power components in `.bin` format.
 
-For MF3CC
+### MF3CF in C
+```bash
+gcc mf3cf.c -o mf3cf.exe -lm
+./mf3cf.exe T3
+```
+
+## Usage MF3CC
+
+### MF3CC in Python:
 ```python
 >> C2_path = 'D:/C2'
 
@@ -61,6 +69,13 @@ For MF3CC
 >> ps, pd, pv = mf3cc_powers(C2_path, wsi, -45) # here chi = -45 (as default)
 ```
 Please check the `C2_path` for the exported power components in `.bin` format.
+
+## MF3CC in c:
+```bash
+gcc mf3cc.c -o mf3cc.exe -lm
+./mf3cc.exe C2 # using default chi angle -45. degrees
+./mf3cc.exe C2 -45. # or, add a numerical parameter to set the chi angle!
+```
 
 ## Reference
 

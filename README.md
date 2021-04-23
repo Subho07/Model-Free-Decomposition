@@ -70,6 +70,13 @@ gcc mf3cf.c -o mf3cf.exe -lm
 ```
 Please check the `C2_path` for the exported power components in `.bin` format.
 
+## MF3CC in c:
+```bash
+gcc mf3cc.c -o mf3cc.exe -lm
+./mf3cc.exe C2 # using default chi angle -45. degrees
+./mf3cc.exe C2 -45. # or, add a numerical parameter to set the chi angle!
+```
+
 ## Reference
 
 - S. Dey, A. Bhattacharya, D. Ratha, D. Mandal and A. C. Frery, "Target Characterization and Scattering Power Decomposition for Full and Compact Polarimetric SAR Data," in IEEE Transactions on Geoscience and Remote Sensing, doi: https://doi.org/10.1109/TGRS.2020.3010840.

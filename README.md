@@ -53,7 +53,7 @@ Please check the `T3_path` for the exported power components in `.bin` format.
 ### MF3CF in C
 ```bash
 gcc mf3cf.c -o mf3cf.exe -lm
-./mf3cf.exe T3
+./mf3cf.exe T3 3 # using T3 data in folder T3, window size 3
 ```
 
 ## Usage MF3CC
@@ -73,8 +73,8 @@ Please check the `C2_path` for the exported power components in `.bin` format.
 ## MF3CC in c:
 ```bash
 gcc mf3cc.c -o mf3cc.exe -lm
-./mf3cc.exe C2 # using default chi angle -45. degrees
-./mf3cc.exe C2 -45. # or, add a numerical parameter to set the chi angle!
+./mf3cc.exe C2 3 # using C2 data in folder C2, window size 4 and default chi angle -45. degrees
+./mf3cc.exe C2 3 -45. # or, add a numerical parameter to set the chi angle!
 ```
 
 ## Reference

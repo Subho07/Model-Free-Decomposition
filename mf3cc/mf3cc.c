@@ -2,8 +2,8 @@
      A Model-free Four Component Scattering Power Decomposition for Polarimetric SAR Data.
 
 To compile and run, e.g.:
-   gcc MF3CC.c -o MF3CC.exe -lm
-  ./MF3CC.exe C2
+   gcc mf3cc.c -o mf3cc.exe -lm
+  ./mf3cc.exe C2 3 # for analysis window size 3
 
 C impl. 20210422 by Ash Richardson, Senior Data Scientist, BC Wildfire Service */
 #include<math.h>
@@ -26,7 +26,7 @@ const char* T_fn[] = {"C11.bin", /* T3 matrix input filenames */
                       "C22.bin"};
 
 float ** T; /* buffers for T3 matrix elements */
-float ** T_f; /* buffers for filtered T3 matrix elements */
+float ** T_f; /* buffers for filtered matrix elements */
 float ** out_d; /* output data buffers */
 
 #define N_OUT 4 /* number of output files */
@@ -141,14 +141,49 @@ float nan_to_num(float x){
   return isinf(x) ? 0 : (isnan(x)? FLT_MAX : x); /* replace NAN w zero, and infinity w large N */
 }
 
+void filter(float * t, float * t_f, int nrow, int ncol, int wsi){
+  int i, j, k, di, dj, dw, x, ix, ii, jj;
+  dw = (wsi - 1) / 2;
+  double dat, n;
+  float d;
+
+  for0(i, nrow){
+    for0(j, ncol){
+      n = dat = 0; /* denominator, result */
+      x = i * ncol + j; /* write index */
+
+      for(di = - dw; di <= dw; di++){
+        ii = i + di;
+
+        if(ii >= 0 && ii < nrow){
+          ix = ii * ncol;
+
+          for(dj = - dw; dj <= dw; dj++){
+            jj = j + dj;
+            d = t[ix + jj];
+
+            if(jj > 0 && jj < ncol && (!(isinf(d) || isnan(d)))){
+              dat += (double)d;
+              n++;
+            }
+          }
+        }
+      }
+      t_f[x] = n > 0 ? (float)(dat / ((double)n)): 0.; /* average */
+    }
+  }
+}
+
 int main(int argc, char ** argv){
 
-  if(argc < 2)
-    err("MF3CC.exe [input C2 directory] [optional chi_in param. (default -45 deg)]");
+  if(argc < 3)
+    err("MF3CC.exe [input C2 directory] [window size] [optional chi_in param. (default -45 deg)]");
 
   float chi_in = -45.;
   char * path = argv[1]; /* T3 matrix data path */
-  if(argc > 2) chi_in = atof(argv[2]); /* optional chi_in */
+  int wsi = atoi(argv[2]); /* window size parameter */
+  if(wsi % 2 != 1) err("window size must be odd number");
+  if(argc > 3) chi_in = atof(argv[3]); /* optional chi_in */
   int i, j, k, nrow, ncol, np, di, dj, ii, jj, x, ix, jx, nw;
 
   char fn[STR_MAX];
@@ -170,20 +205,24 @@ int main(int argc, char ** argv){
     T[k] = read(fn, np); /* read each data band */
   }
 
+  T_f = (float **) alloc(sizeof(float *) * N_IN); /* filtered bands buffers */
+  for0(k, N_IN) T_f[k] = falloc(np);  /* allocate space for filtered bands */
+
   out_d = (float **) alloc(sizeof(float *) * N_OUT); /* output buffers */
   for0(i, N_OUT) out_d[i] = falloc(np); /* allocate output space */
+
+  for0(k, N_IN) filter(T[k], T_f[k], nrow, ncol, wsi); /* filter */
 
   double c11, c12_r, c12_i, c22; /* intermediary variables */
   double trace2, s0, s1, s2, s3, SC, OC;
   double det, trace, trace3, m1, r, theta;
   double h, g, span, val, pd_f, ps_f, pv_f;
-  float * c11_p, * c12_r_p, * c12_i_p, * c22_p;
   float * out_d_theta_f, * out_d_pd_f, * out_d_ps_f, * out_d_pv_f;
 
-  c11_p = T[C11];
-  c12_r_p = T[C12_re];
-  c12_i_p = T[C12_im];
-  c22_p = T[C22];
+  float * c11_p = T_f[C11];
+  float * c12_r_p = T_f[C12_re];
+  float * c12_i_p = T_f[C12_im];
+  float * c22_p = T_f[C22];
 
   out_d_theta_f = out_d[_theta_f];
   out_d_pd_f = out_d[_pd_f];
